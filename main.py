@@ -1,20 +1,16 @@
-#!/usr/bin/env python3
-"""make.fun entry runner: copy the bundled entry.png to the output directory.
+# news-image-20261123 — broadsheet 1600x2240, 23 November 2026, 43 cerita.
+# Entrypoint tipis: mengeksekusi render2.py sebagai __main__ agar ia menulis
+# entry.png di samping file ini. Semua layout dan gambar hidup di render2.py.
 
-Standard library only, no network. The output directory comes from
-MAKEFUN_OUTPUT_DIR (default /output).
-"""
-import os
-import shutil
-
-HERE = os.path.dirname(os.path.abspath(__file__))
+from pathlib import Path as _Pth
+import runpy as _rpy
 
 
-def main():
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    shutil.copyfile(os.path.join(HERE, "entry.png"), os.path.join(out_dir, "entry.png"))
+def _jalankan_broadsheet_23_november_2026():
+    _renderer = _Pth(__file__).resolve().parent / "render2.py"
+    _rpy.run_path(str(_renderer), run_name="__main__")
 
 
-if __name__ == "__main__":
-    main()
+_dijalankan_langsung = __name__ == "__main__"
+if _dijalankan_langsung:
+    _jalankan_broadsheet_23_november_2026()
