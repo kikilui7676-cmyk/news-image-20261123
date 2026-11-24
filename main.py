@@ -1,16 +1,15 @@
-# news-image-20261123 — broadsheet 1600x2240, 23 November 2026, 43 cerita.
-# Entrypoint tipis: mengeksekusi render2.py sebagai __main__ agar ia menulis
-# entry.png di samping file ini. Semua layout dan gambar hidup di render2.py.
+import hashlib
+import runpy
+from pathlib import Path
 
-from pathlib import Path as _Pth
-import runpy as _rpy
-
-
-def _jalankan_broadsheet_23_november_2026():
-    _renderer = _Pth(__file__).resolve().parent / "render2.py"
-    _rpy.run_path(str(_renderer), run_name="__main__")
+HERE = Path(__file__).resolve().parent
 
 
-_dijalankan_langsung = __name__ == "__main__"
-if _dijalankan_langsung:
-    _jalankan_broadsheet_23_november_2026()
+def main():
+    runpy.run_path(str(HERE / "render2.py"), run_name="__main__")
+    data = (HERE / "entry.png").read_bytes()
+    print(f"entry.png: {len(data)} bytes, sha256 {hashlib.sha256(data).hexdigest()}")
+
+
+if __name__ == "__main__":
+    main()
